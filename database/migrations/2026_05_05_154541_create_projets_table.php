@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('titre');
             $table->text('description');
             $table->date('deadline');
-            $table->boolean('est_archived')->default(false);
+            $table->boolean('est_archive')->default(false);
             $table->timestamps();
         });
     }
