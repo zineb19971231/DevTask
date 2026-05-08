@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tasks', function (Blueprint $table) {
-        $table->enum('priorite', ['basse', 'moyenne', 'elevee'])->default('moyenne');
+        Schema::create('projects', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -21,9 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tasks', function (Blueprint $table) {
-                    $table->dropColumn('priorite');
-
-        });
+        Schema::dropIfExists('projects');
     }
 };
