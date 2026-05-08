@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Edit Project - DevTrack</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#494bd6",
+                        "on-secondary": "#2b303d",
+                        "primary": "#c0c1ff",
+                        "inverse-on-surface": "#303038",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "surface-dim": "#13131b",
+                        "on-error": "#690005",
+                        "on-secondary-fixed": "#161b27",
+                        "on-primary": "#1000a9",
+                        "on-tertiary-container": "#452000",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-lowest": "#0d0d15",
+                        "outline": "#908fa0",
+                        "tertiary-fixed": "#ffdcc5",
+                        "primary-container": "#8083ff",
+                        "on-tertiary": "#4f2500",
+                        "inverse-surface": "#e4e1ed",
+                        "surface-variant": "#34343d",
+                        "secondary-container": "#444956",
+                        "tertiary-fixed-dim": "#ffb783",
+                        "surface-tint": "#c0c1ff",
+                        "surface-bright": "#393841",
+                        "on-surface-variant": "#c7c4d7",
+                        "tertiary": "#ffb783",
+                        "surface": "#13131b",
+                        "tertiary-container": "#d97721",
+                        "error-container": "#93000a",
+                        "surface-container": "#1f1f27",
+                        "on-tertiary-fixed": "#301400",
+                        "secondary": "#c2c6d7",
+                        "surface-container-highest": "#34343d",
+                        "surface-container-low": "#1b1b23",
+                        "secondary-fixed": "#dee2f3",
+                        "background": "#13131b",
+                        "on-secondary-fixed-variant": "#424754",
+                        "on-primary-fixed": "#07006c",
+                        "outline-variant": "#464554",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "secondary-fixed-dim": "#c2c6d7",
+                        "on-tertiary-fixed-variant": "#703700",
+                        "on-secondary-container": "#b4b8c8",
+                        "surface-container-high": "#292932",
+                        "primary-fixed": "#e1e0ff",
+                        "on-background": "#e4e1ed",
+                        "on-surface": "#e4e1ed",
+                        "on-primary-container": "#0d0096"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "navbar_height": "56px",
+                        "gutter": "16px",
+                        "container_padding": "24px",
+                        "sidebar_width": "240px",
+                        "base_unit": "4px"
+                    },
+                    "fontFamily": {
+                        "body-strong": ["Inter"],
+                        "h3": ["DM Sans"],
+                        "h2": ["DM Sans"],
+                        "label-mono": ["JetBrains Mono"],
+                        "body": ["Inter"],
+                        "h1": ["DM Sans"],
+                        "caption": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-strong": ["14px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "600" }],
+                        "h3": ["20px", { "lineHeight": "28px", "letterSpacing": "0", "fontWeight": "700" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body": ["14px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h1": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "caption": ["12px", { "lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0D0F14;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        }
+        .modal-bg {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        .surface-card {
+            background-color: #161B27;
+            border-color: #1E2535;
+        }
+    </style>
+</head>
+<body class="font-body text-body text-on-surface antialiased h-screen w-screen overflow-hidden flex items-center justify-center">
+<!-- Modal Overlay -->
+<div class="fixed inset-0 modal-bg backdrop-blur-sm flex items-center justify-center p-4 z-50">
+<!-- Modal Card -->
+<div class="surface-card border rounded-xl w-full max-w-[520px] p-[32px] flex flex-col gap-6 shadow-2xl">
+<!-- Header -->
+<div class="flex justify-between items-center">
+<h2 class="font-h3 text-h3 text-on-surface">Edit Project</h2>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">close</span>
+</button>
+</div>
+<!-- Form Fields -->
+<div class="flex flex-col gap-5">
+<!-- Title -->
+<div class="flex flex-col gap-2">
+<label class="font-label-mono text-label-mono text-on-surface-variant uppercase">Title</label>
+<input class="bg-surface-container border border-outline-variant rounded-md px-3 py-2 text-body font-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full placeholder-on-surface-variant font-label-mono" type="text" value="Marrakech API Project"/>
+</div>
+<!-- Description -->
+<div class="flex flex-col gap-2">
+<label class="font-label-mono text-label-mono text-on-surface-variant uppercase">Description</label>
+<textarea class="bg-surface-container border border-outline-variant rounded-md px-3 py-2 text-body font-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full placeholder-on-surface-variant font-label-mono resize-none" rows="3">Modernizing core API endpoints for better throughput.</textarea>
+</div>
+<!-- Deadline -->
+<div class="flex flex-col gap-2">
+<label class="font-label-mono text-label-mono text-on-surface-variant uppercase">Deadline</label>
+<div class="relative">
+<input class="bg-surface-container border border-outline-variant rounded-md pl-10 pr-3 py-2 text-body font-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full font-label-mono" type="text" value="May 15, 2024"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">calendar_today</span>
+</div>
+</div>
+</div>
+<hr class="border-outline-variant w-full"/>
+<!-- Members Section -->
+<div class="flex flex-col gap-4">
+<h3 class="font-body-strong text-body-strong text-on-surface">Current Members</h3>
+<!-- Member List -->
+<div class="flex flex-col gap-3">
+<!-- Member 1 -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center font-label-mono text-label-mono text-on-surface">AL</div>
+<div class="flex flex-col">
+<span class="font-body-strong text-body-strong text-on-surface">Alex L.</span>
+<span class="font-caption text-caption text-on-surface-variant">alex@devtrack.io</span>
+</div>
+</div>
+<button class="font-body text-body text-error hover:text-error/80 transition-colors opacity-0 group-hover:opacity-100 cursor-pointer">Remove</button>
+</div>
+<!-- Member 2 -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center font-label-mono text-label-mono text-on-surface">SJ</div>
+<div class="flex flex-col">
+<span class="font-body-strong text-body-strong text-on-surface">Sam J.</span>
+<span class="font-caption text-caption text-on-surface-variant">sam@devtrack.io</span>
+</div>
+</div>
+<button class="font-body text-body text-error hover:text-error/80 transition-colors opacity-0 group-hover:opacity-100 cursor-pointer">Remove</button>
+</div>
+<!-- Member 3 -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center font-label-mono text-label-mono text-on-surface">ME</div>
+<div class="flex flex-col">
+<span class="font-body-strong text-body-strong text-on-surface">Mike E.</span>
+<span class="font-caption text-caption text-on-surface-variant">mike@devtrack.io</span>
+</div>
+</div>
+<button class="font-body text-body text-error hover:text-error/80 transition-colors opacity-0 group-hover:opacity-100 cursor-pointer">Remove</button>
+</div>
+</div>
+<!-- Add Member -->
+<div class="flex gap-2 mt-2">
+<input class="bg-surface-container border border-outline-variant rounded-md px-3 py-2 text-body font-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary flex-1 placeholder-on-surface-variant font-label-mono" placeholder="Add member by email..." type="email"/>
+<button class="bg-primary-container text-on-primary-container hover:bg-primary-container/90 transition-colors font-body-strong text-body-strong px-4 py-2 rounded-md cursor-pointer">Invite</button>
+</div>
+</div>
+<hr class="border-outline-variant w-full"/>
+<!-- Footer Actions -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<button class="border border-outline-variant text-on-surface hover:bg-surface-variant transition-colors font-body-strong text-body-strong px-4 py-2 rounded-md cursor-pointer">Cancel</button>
+<button class="bg-inverse-primary text-white hover:bg-inverse-primary/90 transition-colors font-body-strong text-body-strong px-4 py-2 rounded-md cursor-pointer">Save Changes</button>
+</div>
+<div class="flex justify-center mt-2">
+<button class="flex items-center gap-2 text-error hover:text-error/80 transition-colors font-caption text-caption cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+                        Archive this project
+                    </button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

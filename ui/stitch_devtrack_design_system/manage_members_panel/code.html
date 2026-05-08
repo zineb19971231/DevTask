@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Manage Members - DevTrack</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-fixed-variant": "#424754",
+                        "on-secondary-fixed": "#161b27",
+                        "surface-container-lowest": "#0d0d15",
+                        "primary": "#c0c1ff",
+                        "outline-variant": "#464554",
+                        "tertiary-fixed-dim": "#ffb783",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "on-background": "#e4e1ed",
+                        "tertiary-fixed": "#ffdcc5",
+                        "on-tertiary-container": "#452000",
+                        "secondary": "#c2c6d7",
+                        "on-error-container": "#ffdad6",
+                        "background": "#13131b",
+                        "surface-container-low": "#1b1b23",
+                        "secondary-fixed-dim": "#c2c6d7",
+                        "inverse-on-surface": "#303038",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "error-container": "#93000a",
+                        "surface-bright": "#393841",
+                        "inverse-surface": "#e4e1ed",
+                        "surface-tint": "#c0c1ff",
+                        "surface-variant": "#34343d",
+                        "tertiary-container": "#d97721",
+                        "secondary-container": "#444956",
+                        "on-tertiary-fixed-variant": "#703700",
+                        "on-tertiary": "#4f2500",
+                        "on-primary-container": "#0d0096",
+                        "error": "#ffb4ab",
+                        "surface-container-high": "#292932",
+                        "secondary-fixed": "#dee2f3",
+                        "on-secondary-container": "#b4b8c8",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed": "#301400",
+                        "tertiary": "#ffb783",
+                        "outline": "#908fa0",
+                        "on-surface-variant": "#c7c4d7",
+                        "on-surface": "#e4e1ed",
+                        "on-secondary": "#2b303d",
+                        "on-primary": "#1000a9",
+                        "surface-container-highest": "#34343d",
+                        "surface-container": "#1f1f27",
+                        "surface": "#13131b",
+                        "surface-dim": "#13131b",
+                        "primary-fixed": "#e1e0ff",
+                        "primary-container": "#8083ff",
+                        "on-primary-fixed": "#07006c",
+                        "inverse-primary": "#494bd6",
+                        "panel-surface": "#161B27",
+                        "panel-border": "#1E2535"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                    spacing: {
+                        gutter: "16px",
+                        container_padding: "24px",
+                        base_unit: "4px",
+                        navbar_height: "56px",
+                        sidebar_width: "240px",
+                        panel_width: "380px"
+                    },
+                    fontFamily: {
+                        h3: ["DM Sans"],
+                        body: ["Inter"],
+                        "body-strong": ["Inter"],
+                        h2: ["DM Sans"],
+                        h1: ["DM Sans"],
+                        "label-mono": ["JetBrains Mono"],
+                        caption: ["Inter"]
+                    },
+                    fontSize: {
+                        h3: ["20px", { lineHeight: "28px", letterSpacing: "0", fontWeight: "700" }],
+                        body: ["14px", { lineHeight: "20px", letterSpacing: "0", fontWeight: "400" }],
+                        "body-strong": ["14px", { lineHeight: "20px", letterSpacing: "0", fontWeight: "600" }],
+                        h2: ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "700" }],
+                        h1: ["28px", { lineHeight: "36px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "label-mono": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }],
+                        caption: ["12px", { lineHeight: "16px", letterSpacing: "0", fontWeight: "400" }]
+                    },
+                    backgroundImage: {
+                        'grain': "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.05%22/%3E%3C/svg%3E')"
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body min-h-screen relative overflow-hidden bg-grain">
+<!-- Dimmed Background Overlay -->
+<div aria-hidden="true" class="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm transition-opacity"></div>
+<!-- Slide-over Panel -->
+<div class="fixed inset-y-0 right-0 z-50 w-full max-w-[380px] bg-panel-surface border-l border-panel-border shadow-[-20px_0_40px_rgba(0,0,0,0.8)] flex flex-col transform transition-transform duration-300 ease-in-out">
+<!-- Header -->
+<div class="h-[64px] px-6 py-4 border-b border-panel-border flex items-start justify-between bg-panel-surface z-10 shrink-0">
+<div>
+<h2 class="font-h3 text-h3 text-on-surface">Team Members</h2>
+<p class="font-caption text-caption text-on-surface-variant mt-0.5">Marrakech API Project</p>
+</div>
+<button aria-label="Close panel" class="text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded p-1 -mr-2 -mt-1">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Scrollable Content: Current Members -->
+<div class="flex-1 overflow-y-auto p-6 space-y-1 custom-scrollbar">
+<!-- Member Row 1 (Lead) -->
+<div class="group flex items-center justify-between py-3 border-b border-panel-border/50 last:border-0 hover:bg-surface-variant/30 rounded-lg px-2 -mx-2 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-body-strong text-[14px]">
+                        JD
+                    </div>
+<div>
+<p class="font-body-strong text-body-strong text-on-surface">Jane Doe</p>
+<p class="font-caption text-caption text-on-surface-variant">jane.doe@example.com</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary font-label-mono text-[10px] uppercase tracking-wider border border-primary/20">Lead</span>
+</div>
+</div>
+<!-- Member Row 2 -->
+<div class="group flex items-center justify-between py-3 border-b border-panel-border/50 last:border-0 hover:bg-surface-variant/30 rounded-lg px-2 -mx-2 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-body-strong text-[14px] border border-panel-border">
+                        AS
+                    </div>
+<div>
+<p class="font-body-strong text-body-strong text-on-surface">Alex Smith</p>
+<p class="font-caption text-caption text-on-surface-variant">alex.s@example.com</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-mono text-[10px] uppercase tracking-wider border border-panel-border">Developer</span>
+<button class="opacity-0 group-hover:opacity-100 text-error hover:bg-error/10 px-2 py-1 rounded text-caption font-body transition-all focus:opacity-100 focus:outline-none focus:ring-1 focus:ring-error">
+                        Remove
+                    </button>
+</div>
+</div>
+<!-- Member Row 3 -->
+<div class="group flex items-center justify-between py-3 border-b border-panel-border/50 last:border-0 hover:bg-surface-variant/30 rounded-lg px-2 -mx-2 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-body-strong text-[14px] border border-panel-border">
+                        MC
+                    </div>
+<div>
+<p class="font-body-strong text-body-strong text-on-surface">Maria Chen</p>
+<p class="font-caption text-caption text-on-surface-variant">m.chen@example.com</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-mono text-[10px] uppercase tracking-wider border border-panel-border">Developer</span>
+<button class="opacity-0 group-hover:opacity-100 text-error hover:bg-error/10 px-2 py-1 rounded text-caption font-body transition-all focus:opacity-100 focus:outline-none focus:ring-1 focus:ring-error">
+                        Remove
+                    </button>
+</div>
+</div>
+</div>
+<!-- Add Member Section (Pinned Bottom) -->
+<div class="p-6 border-t border-panel-border bg-panel-surface shrink-0 mt-auto">
+<label class="block font-label-mono text-label-mono text-on-surface-variant mb-2" for="new-member-email">
+                Add Developer by Email
+            </label>
+<div class="space-y-4">
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+</div>
+<input class="w-full bg-surface-container-lowest border border-panel-border rounded text-body font-body text-on-surface pl-10 py-2 focus:ring-1 focus:ring-primary focus:border-primary placeholder-outline placeholder:font-label-mono" id="new-member-email" placeholder="developer@example.com" type="email"/>
+</div>
+<button class="w-full bg-primary text-on-primary font-body-strong text-body-strong py-2.5 rounded hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    Add Member
+                </button>
+<p class="font-caption text-[11px] text-on-surface-variant/70 italic flex items-start gap-1.5 mt-2">
+<span class="material-symbols-outlined text-[14px] mt-0.5 opacity-70">info</span>
+                    The developer must already have a DevTrack account.
+                </p>
+</div>
+</div>
+</div>
+</body></html>

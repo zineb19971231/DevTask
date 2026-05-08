@@ -1,52 +1,143 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+@extends('layouts.auth')
+
+@section('title', 'DevTrack - Register')
+
+@section('content')
+    <div class="text-center mb-8 flex flex-col items-center">
+        <div class="w-12 h-12 bg-surface rounded-xl border border-outline-variant flex items-center justify-center mb-4 shadow-lg shadow-black/50">
+            <span class="material-symbols-outlined text-primary text-3xl font-bold" style="font-variation-settings: 'FILL' 1;">tag</span>
+        </div>
+        <h1 class="font-h2 text-h2 text-on-surface mb-2 tracking-tight">DevTrack</h1>
+        <p class="font-body text-body text-on-surface-variant">Create your account to get started</p>
+    </div>
+
+    <form method="POST" action="{{ route('register') }}" class="space-y-6">
         @csrf
+
+        <!-- Role Selector -->
+        <div class="space-y-3">
+            <label class="block font-body-strong text-body-strong text-on-surface-variant">I am joining as a</label>
+            <div class="grid grid-cols-2 gap-3">
+                <button type="button" class="role-btn bg-primary/10 border border-primary text-primary font-body-strong text-body-strong py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors" data-role="lead">
+                    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                    Team Lead
+                </button>
+                <button type="button" class="role-btn bg-surface-container-lowest border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-outline font-body-strong text-body-strong py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors" data-role="developer">
+                    <span class="material-symbols-outlined text-[20px]">terminal</span>
+                    Developer
+                </button>
+            </div>
+            <input type="hidden" name="role" id="role" value="lead" required>
+            @error('role')
+                <p class="mt-2 font-caption text-caption text-error">{{ $message }}</p>
+            @enderror
+        </div>
 
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <label class="sr-only" for="name">Full Name</label>
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <span class="material-symbols-outlined text-outline text-[20px]">person</span>
+                </div>
+                <input id="name" class="block w-full pl-10 pr-3 py-3 bg-surface-container-lowest border border-outline-variant rounded-lg text-on-surface placeholder-outline font-label-mono text-label-mono focus:ring-1 focus:ring-primary focus:border-primary transition-colors h-[48px] @error('name') border-error @enderror"
+                       type="text" name="name" value="{{ old('name') }}" required placeholder="Full Name">
+            </div>
+            @error('name')
+                <p class="mt-2 font-caption text-caption text-error">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div>
+            <label class="sr-only" for="email">Email address</label>
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <span class="material-symbols-outlined text-outline text-[20px]">mail</span>
+                </div>
+                <input id="email" class="block w-full pl-10 pr-3 py-3 bg-surface-container-lowest border border-outline-variant rounded-lg text-on-surface placeholder-outline font-label-mono text-label-mono focus:ring-1 focus:ring-primary focus:border-primary transition-colors h-[48px] @error('email') border-error @enderror"
+                       type="email" name="email" value="{{ old('email') }}" required placeholder="developer@company.com">
+            </div>
+            @error('email')
+                <p class="mt-2 font-caption text-caption text-error">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div>
+            <label class="sr-only" for="password">Password</label>
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <span class="material-symbols-outlined text-outline text-[20px]">lock</span>
+                </div>
+                <input id="password" class="block w-full pl-10 pr-10 py-3 bg-surface-container-lowest border border-outline-variant rounded-lg text-on-surface placeholder-outline font-label-mono text-label-mono focus:ring-1 focus:ring-primary focus:border-primary transition-colors h-[48px] @error('password') border-error @enderror"
+                       type="password" name="password" required placeholder="••••••••">
+                <button type="button" class="toggle-password absolute inset-y-0 right-0 pr-3 flex items-center text-outline hover:text-on-surface transition-colors">
+                    <span class="material-symbols-outlined text-[20px]">visibility_off</span>
+                </button>
+            </div>
+            @error('password')
+                <p class="mt-2 font-caption text-caption text-error">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        <div>
+            <label class="sr-only" for="password_confirmation">Confirm Password</label>
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <span class="material-symbols-outlined text-outline text-[20px]">lock</span>
+                </div>
+                <input id="password_confirmation" class="block w-full pl-10 pr-10 py-3 bg-surface-container-lowest border border-outline-variant rounded-lg text-on-surface placeholder-outline font-label-mono text-label-mono focus:ring-1 focus:ring-primary focus:border-primary transition-colors h-[48px]"
+                       type="password" name="password_confirmation" required placeholder="••••••••">
+                <button type="button" class="toggle-password absolute inset-y-0 right-0 pr-3 flex items-center text-outline hover:text-on-surface transition-colors">
+                    <span class="material-symbols-outlined text-[20px]">visibility_off</span>
+                </button>
+            </div>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
+        <div>
+            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm font-body-strong text-body-strong text-on-primary bg-primary hover:bg-primary-fixed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-surface transition-colors h-[48px] items-center">
+                Create Account
+                <span class="material-symbols-outlined ml-2 text-[20px]">arrow_forward</span>
+            </button>
         </div>
     </form>
-</x-guest-layout>
+
+    <div class="mt-6 text-center">
+        <p class="font-body text-body text-on-surface-variant">
+            Already have an account?
+            <a class="font-body-strong text-primary hover:text-primary-fixed transition-colors" href="{{ route('login') }}">Sign in</a>
+        </p>
+    </div>
+
+    <script>
+        // Role selector
+        document.querySelectorAll('.role-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.role-btn').forEach(b => {
+                    b.classList.remove('bg-primary/10', 'border-primary', 'text-primary');
+                    b.classList.add('bg-surface-container-lowest', 'border-outline-variant', 'text-on-surface-variant');
+                });
+                this.classList.remove('bg-surface-container-lowest', 'border-outline-variant', 'text-on-surface-variant');
+                this.classList.add('bg-primary/10', 'border-primary', 'text-primary');
+                document.getElementById('role').value = this.dataset.role;
+            });
+        });
+
+        // Toggle password visibility
+        document.querySelectorAll('.toggle-password').forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.parentElement.querySelector('input');
+                const icon = this.querySelector('span');
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.textContent = 'visibility';
+                } else {
+                    input.type = 'password';
+                    icon.textContent = 'visibility_off';
+                }
+            });
+        });
+    </script>
+@endsection
