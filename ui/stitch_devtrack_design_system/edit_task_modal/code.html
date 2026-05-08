@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Edit Task - DevTrack</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "primary-fixed-dim": "#c0c1ff",
+                            "surface-dim": "#13131b",
+                            "inverse-primary": "#494bd6",
+                            "on-secondary": "#2b303d",
+                            "primary": "#c0c1ff",
+                            "inverse-on-surface": "#303038",
+                            "error": "#ffb4ab",
+                            "on-tertiary-container": "#452000",
+                            "on-error-container": "#ffdad6",
+                            "surface-container-lowest": "#0d0d15",
+                            "outline": "#908fa0",
+                            "tertiary-fixed": "#ffdcc5",
+                            "primary-container": "#8083ff",
+                            "on-tertiary": "#4f2500",
+                            "inverse-surface": "#e4e1ed",
+                            "on-error": "#690005",
+                            "on-secondary-fixed": "#161b27",
+                            "on-primary": "#1000a9",
+                            "tertiary": "#ffb783",
+                            "surface": "#13131b",
+                            "tertiary-container": "#d97721",
+                            "error-container": "#93000a",
+                            "surface-container": "#1f1f27",
+                            "on-tertiary-fixed": "#301400",
+                            "secondary": "#c2c6d7",
+                            "surface-container-highest": "#34343d",
+                            "surface-variant": "#34343d",
+                            "secondary-container": "#444956",
+                            "tertiary-fixed-dim": "#ffb783",
+                            "surface-tint": "#c0c1ff",
+                            "surface-bright": "#393841",
+                            "on-surface-variant": "#c7c4d7",
+                            "surface-container-high": "#292932",
+                            "primary-fixed": "#e1e0ff",
+                            "on-background": "#e4e1ed",
+                            "on-surface": "#e4e1ed",
+                            "on-primary-container": "#0d0096",
+                            "surface-container-low": "#1b1b23",
+                            "secondary-fixed": "#dee2f3",
+                            "background": "#13131b",
+                            "on-secondary-fixed-variant": "#424754",
+                            "on-primary-fixed": "#07006c",
+                            "outline-variant": "#464554",
+                            "on-primary-fixed-variant": "#2f2ebe",
+                            "secondary-fixed-dim": "#c2c6d7",
+                            "on-tertiary-fixed-variant": "#703700",
+                            "on-secondary-container": "#b4b8c8"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                    },
+                    "spacing": {
+                            "navbar_height": "56px",
+                            "gutter": "16px",
+                            "container_padding": "24px",
+                            "sidebar_width": "240px",
+                            "base_unit": "4px"
+                    },
+                    "fontFamily": {
+                            "h3": ["DM Sans"],
+                            "body-strong": ["Inter"],
+                            "h1": ["DM Sans"],
+                            "caption": ["Inter"],
+                            "label-mono": ["JetBrains Mono"],
+                            "body": ["Inter"],
+                            "h2": ["DM Sans"]
+                    },
+                    "fontSize": {
+                            "h3": ["20px", {"lineHeight": "28px", "letterSpacing": "0", "fontWeight": "700"}],
+                            "body-strong": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "600"}],
+                            "h1": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                            "caption": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                            "label-mono": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                            "body": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                            "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .grain-bg {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        }
+        
+        /* Modal Backdrop Blur */
+        .backdrop-blur-sm {
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased grain-bg min-h-screen flex items-center justify-center p-4">
+<!-- Modal Backdrop -->
+<div class="fixed inset-0 bg-background/80 backdrop-blur-sm z-40"></div>
+<!-- Modal Container -->
+<div class="relative w-full max-w-[520px] bg-[#161B27] border border-outline-variant rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden">
+<!-- Header -->
+<div class="px-6 py-5 border-b border-outline-variant flex flex-col gap-1">
+<h2 class="font-h3 text-h3 text-on-surface">Edit Task</h2>
+<p class="font-caption text-caption text-on-surface-variant truncate">Build authentication endpoint</p>
+</div>
+<!-- Form Body -->
+<div class="px-6 py-6 flex flex-col gap-6 overflow-y-auto max-h-[614px]">
+<!-- Task Title -->
+<div class="flex flex-col gap-2">
+<label class="font-body-strong text-body-strong text-on-surface" for="task-title">Task Title</label>
+<input class="bg-surface border border-outline-variant rounded-lg px-4 py-2 font-body text-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full" id="task-title" type="text" value="Build authentication endpoint"/>
+</div>
+<!-- Description -->
+<div class="flex flex-col gap-2">
+<label class="font-body-strong text-body-strong text-on-surface" for="task-desc">Description</label>
+<textarea class="bg-surface border border-outline-variant rounded-lg px-4 py-3 font-body text-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full resize-none" id="task-desc" rows="4">Implement JWT-based authentication for the main API. Ensure proper token expiration and refresh logic. Add unit tests for the new auth middleware.</textarea>
+</div>
+<!-- Deadline & Priority Row -->
+<div class="grid grid-cols-2 gap-4">
+<!-- Deadline -->
+<div class="flex flex-col gap-2">
+<label class="font-body-strong text-body-strong text-on-surface" for="task-deadline">Deadline</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">calendar_today</span>
+<input class="bg-surface border border-outline-variant rounded-lg pl-10 pr-4 py-2 font-body text-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full cursor-pointer" id="task-deadline" type="text" value="Oct 24, 2023"/>
+</div>
+</div>
+<!-- Priority -->
+<div class="flex flex-col gap-2">
+<label class="font-body-strong text-body-strong text-on-surface">Priority</label>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded bg-surface border border-outline-variant font-caption text-caption text-on-surface-variant hover:bg-surface-variant transition-colors">Low</button>
+<button class="px-3 py-1.5 rounded bg-surface border border-outline-variant font-caption text-caption text-on-surface-variant hover:bg-surface-variant transition-colors">Medium</button>
+<button class="px-3 py-1.5 rounded bg-error/10 border border-error/20 font-caption text-caption text-error hover:bg-error/20 transition-colors">High</button>
+</div>
+</div>
+</div>
+<!-- Assign To -->
+<div class="flex flex-col gap-2">
+<label class="font-body-strong text-body-strong text-on-surface">Assign To</label>
+<div class="flex items-center justify-between bg-surface border border-outline-variant rounded-lg px-4 py-2 cursor-pointer hover:border-outline transition-colors">
+<div class="flex items-center gap-3">
+<img alt="Profile avatar" class="w-6 h-6 rounded-full" data-alt="A small circular avatar image of a young male professional with dark hair and a subtle smile, set against a dark background, fitting a modern SaaS dashboard aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKr3dLSLxIjneCqV9RtNVb4gsrLyaGBHZKFYfLzk7BNzWMll6nL7N5zl8Z8HzN1T7QL6X35JqkxsDsplJlEM3zy9enn7u_fGAec9L4QxIwSbLQZuagYjkfkMOzxWCxB0jXultC8RvQvF2hcH-eJ6RTESd8TaKFIXAQGllbDhO_DOEtALAzT_lyO-qZXXXHd36SJzNGh51HOVaYhSJ7wZthi1zb_vcvMPw71VPn7nAQ85CK7I_tWWlYffQSk8C0rwMwHDGakENUQxMR"/>
+<span class="font-body text-body text-on-surface">Yassin Merrouni</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">expand_more</span>
+</div>
+</div>
+<!-- Current Status (Read Only) -->
+<div class="flex flex-col gap-2 pt-4 border-t border-outline-variant/50">
+<div class="flex items-center gap-3">
+<span class="font-body-strong text-body-strong text-on-surface">Current Status</span>
+<div class="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-primary">sync</span>
+<span class="font-caption text-caption text-primary">In Progress</span>
+</div>
+</div>
+<p class="font-caption text-caption text-on-surface-variant">Status is updated by the assigned developer.</p>
+</div>
+</div>
+<!-- Footer -->
+<div class="px-6 py-4 border-t border-outline-variant bg-surface-container-low flex items-center justify-between">
+<button class="flex items-center gap-2 text-error hover:text-error-container transition-colors group">
+<span class="material-symbols-outlined text-[18px] group-hover:scale-110 transition-transform">delete</span>
+<span class="font-body-strong text-body-strong">Delete this task</span>
+</button>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 rounded-lg border border-outline-variant font-body-strong text-body-strong text-on-surface hover:bg-surface-variant transition-colors">Cancel</button>
+<button class="px-4 py-2 rounded-lg bg-primary text-on-primary font-body-strong text-body-strong hover:bg-primary/90 transition-colors shadow-sm">Save Task</button>
+</div>
+</div>
+</div>
+</body></html>

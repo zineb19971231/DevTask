@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DevTrack - Create Task</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#c0c1ff",
+                    "surface-dim": "#13131b",
+                    "on-tertiary-fixed-variant": "#703700",
+                    "on-surface-variant": "#c7c4d7",
+                    "primary": "#c0c1ff",
+                    "inverse-surface": "#e4e1ed",
+                    "surface-container": "#1f1f27",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-container": "#d97721",
+                    "tertiary-fixed-dim": "#ffb783",
+                    "on-tertiary-container": "#452000",
+                    "on-primary-container": "#0d0096",
+                    "on-secondary-container": "#b4b8c8",
+                    "surface-container-high": "#292932",
+                    "surface-container-lowest": "#0d0d15",
+                    "on-primary-fixed-variant": "#2f2ebe",
+                    "on-background": "#e4e1ed",
+                    "primary-container": "#8083ff",
+                    "error": "#ffb4ab",
+                    "on-secondary-fixed-variant": "#424754",
+                    "surface-bright": "#393841",
+                    "on-primary-fixed": "#07006c",
+                    "surface": "#13131b",
+                    "primary-fixed-dim": "#c0c1ff",
+                    "error-container": "#93000a",
+                    "surface-container-low": "#1b1b23",
+                    "outline-variant": "#464554",
+                    "outline": "#908fa0",
+                    "background": "#13131b",
+                    "inverse-on-surface": "#303038",
+                    "secondary-container": "#444956",
+                    "secondary-fixed": "#dee2f3",
+                    "inverse-primary": "#494bd6",
+                    "on-secondary": "#2b303d",
+                    "on-tertiary-fixed": "#301400",
+                    "tertiary": "#ffb783",
+                    "secondary": "#c2c6d7",
+                    "on-primary": "#1000a9",
+                    "tertiary-fixed": "#ffdcc5",
+                    "primary-fixed": "#e1e0ff",
+                    "surface-variant": "#34343d",
+                    "on-surface": "#e4e1ed",
+                    "surface-container-highest": "#34343d",
+                    "on-error": "#690005",
+                    "on-secondary-fixed": "#161b27",
+                    "secondary-fixed-dim": "#c2c6d7",
+                    "on-tertiary": "#4f2500"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "container_padding": "24px",
+                    "navbar_height": "56px",
+                    "sidebar_width": "240px",
+                    "base_unit": "4px"
+            },
+            "fontFamily": {
+                    "body-strong": [
+                            "Inter"
+                    ],
+                    "h2": [
+                            "DM Sans"
+                    ],
+                    "h3": [
+                            "DM Sans"
+                    ],
+                    "body": [
+                            "Inter"
+                    ],
+                    "label-mono": [
+                            "JetBrains Mono"
+                    ],
+                    "h1": [
+                            "DM Sans"
+                    ],
+                    "caption": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "body-strong": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "h2": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "h3": [
+                            "20px",
+                            {
+                                    "lineHeight": "28px",
+                                    "letterSpacing": "0",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-mono": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.02em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "h1": [
+                            "28px",
+                            {
+                                    "lineHeight": "36px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "caption": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen flex items-center justify-center relative antialiased bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjMGQwZjE0Ij48L3JlY3Q+Cjxwb2x5Z29uIGZpbGw9IiMxMTEyMTYiIHBvaW50cz0iMCAwIDEgMCAxIDEgMCAxIj48L3BvbHlnb24+Cjxwb2x5Z29uIGZpbGw9IiMxMTEyMTYiIHBvaW50cz0iMiAyIDMgMiAzIDMgMiAzIj48L3BvbHlnb24+Cjwvc3ZnPg==')]">
+<!-- Overlay -->
+<div class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"></div>
+<!-- Modal Container -->
+<div class="relative z-50 w-full max-w-[520px] bg-[#161B27] border border-[#1E2535] rounded-[12px] shadow-2xl flex flex-col overflow-hidden mx-4">
+<!-- Header -->
+<div class="flex items-center justify-between px-6 py-5 border-b border-[#1E2535]">
+<h2 class="font-h3 text-h3 text-on-surface m-0">Add Task to Marrakech API Project</h2>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors p-1 rounded-md hover:bg-surface-variant">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Body -->
+<div class="p-6 flex flex-col gap-6">
+<!-- Task Title -->
+<div class="flex flex-col gap-2">
+<label class="font-body-strong text-body-strong text-on-surface" for="task-title">Task Title</label>
+<input class="w-full h-12 bg-surface border border-outline-variant rounded-lg px-4 font-body text-body text-on-surface placeholder:text-on-surface-variant placeholder:font-label-mono placeholder:text-label-mono focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" id="task-title" placeholder="e.g. Build authentication endpoint" type="text"/>
+</div>
+<!-- Description -->
+<div class="flex flex-col gap-2">
+<label class="font-body-strong text-body-strong text-on-surface" for="task-desc">Description</label>
+<textarea class="w-full bg-surface border border-outline-variant rounded-lg p-4 font-body text-body text-on-surface placeholder:text-on-surface-variant placeholder:font-label-mono placeholder:text-label-mono focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors resize-none" id="task-desc" placeholder="Technical details, acceptance criteria..." rows="3"></textarea>
+</div>
+<!-- Deadline & Priority Row -->
+<div class="flex flex-col sm:flex-row gap-6">
+<!-- Deadline -->
+<div class="flex flex-col gap-2 flex-1">
+<label class="font-body-strong text-body-strong text-on-surface" for="task-deadline">Deadline</label>
+<div class="relative">
+<input class="w-full h-[40px] bg-surface border border-outline-variant rounded-lg px-4 font-body text-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors [&amp;::-webkit-calendar-picker-indicator]:opacity-0 [&amp;::-webkit-calendar-picker-indicator]:absolute [&amp;::-webkit-calendar-picker-indicator]:inset-0 [&amp;::-webkit-calendar-picker-indicator]:w-full [&amp;::-webkit-calendar-picker-indicator]:h-full [&amp;::-webkit-calendar-picker-indicator]:cursor-pointer" id="task-deadline" type="date"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none" data-icon="calendar_month">calendar_month</span>
+</div>
+</div>
+<!-- Priority -->
+<div class="flex flex-col gap-2 flex-1">
+<label class="font-body-strong text-body-strong text-on-surface">Priority</label>
+<div class="flex items-center gap-2 h-[40px]">
+<button class="flex-1 h-full rounded-[4px] border border-outline-variant bg-surface text-on-surface font-body-strong text-body-strong hover:bg-surface-variant transition-colors">Low</button>
+<button class="flex-1 h-full rounded-[4px] border-none bg-amber-500/20 text-amber-500 font-body-strong text-body-strong ring-1 ring-amber-500/50">Medium</button>
+<button class="flex-1 h-full rounded-[4px] border border-outline-variant bg-surface text-on-surface font-body-strong text-body-strong hover:bg-surface-variant transition-colors">High</button>
+</div>
+</div>
+</div>
+<!-- Assign To -->
+<div class="flex flex-col gap-2 relative">
+<label class="font-body-strong text-body-strong text-on-surface">Assign To</label>
+<div class="w-full h-[48px] bg-surface border border-outline-variant rounded-lg px-4 flex items-center justify-between cursor-pointer hover:border-primary/50 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-surface-variant overflow-hidden">
+<img alt="Avatar" class="w-full h-full object-cover" data-alt="A portrait of a male software developer with short dark hair, wearing a casual dark gray t-shirt. The lighting is soft and professional, suitable for a dark-mode SaaS application profile avatar. The background is slightly blurred." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7a6NIOrMRGc5SjrX0FIj8OAdbfoXCOpMlMyHWz2tvH9_NvKpaa8PwXleZE2favGy6K35TmfDPX7_RT4wlPvTuiI8Ng01dH_GyoenS6rNAOKehLzHg5V2Jluk-GDahz-_qeu6-g1OzI-RaBdl-5hKmKyaGi-kAWk_Mfv2rawo9Pzs_VC5IlmDf_CrV9vZbUn8HSQpO6FVSSxoEeyPmyfiueiITiSt9gMMzB3uxuz_o3O6fWcLHgb-JqZgQczq17-MjSzrFtEDwp7E2"/>
+</div>
+<span class="font-body text-body text-on-surface">Alex Mercer</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="px-6 py-5 border-t border-[#1E2535] flex items-center justify-between bg-surface-container-lowest">
+<button class="px-4 py-2 rounded-[6px] font-body-strong text-body-strong text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors border border-transparent hover:border-outline-variant">Cancel</button>
+<button class="px-6 py-2 rounded-[6px] bg-primary text-on-primary font-h3 text-[14px] leading-[20px] hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-lg shadow-primary/10">Create Task</button>
+</div>
+<!-- Tip -->
+<div class="px-6 pb-5 pt-2 bg-surface-container-lowest text-center">
+<p class="font-caption text-caption text-on-surface-variant italic">Tip: Set a realistic deadline. Tasks due in &lt;48h will be flagged as urgent.</p>
+</div>
+</div>
+</body></html>

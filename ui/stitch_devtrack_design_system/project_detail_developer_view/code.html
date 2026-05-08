@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DevTrack - Marrakech API Project</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&amp;family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#b4b8c8",
+                    "tertiary-container": "#d97721",
+                    "on-tertiary": "#4f2500",
+                    "surface-container-lowest": "#0d0d15",
+                    "on-tertiary-fixed-variant": "#703700",
+                    "on-primary-fixed-variant": "#2f2ebe",
+                    "error-container": "#93000a",
+                    "surface-container": "#1f1f27",
+                    "on-primary-fixed": "#07006c",
+                    "inverse-primary": "#494bd6",
+                    "outline": "#908fa0",
+                    "outline-variant": "#464554",
+                    "on-tertiary-container": "#452000",
+                    "surface-container-low": "#1b1b23",
+                    "on-surface": "#e4e1ed",
+                    "surface-bright": "#393841",
+                    "inverse-on-surface": "#303038",
+                    "on-secondary-fixed-variant": "#424754",
+                    "secondary": "#c2c6d7",
+                    "surface-dim": "#13131b",
+                    "on-tertiary-fixed": "#301400",
+                    "on-primary": "#1000a9",
+                    "tertiary-fixed-dim": "#ffb783",
+                    "tertiary-fixed": "#ffdcc5",
+                    "surface-variant": "#34343d",
+                    "on-error-container": "#ffdad6",
+                    "secondary-container": "#444956",
+                    "surface": "#13131b",
+                    "primary-fixed": "#e1e0ff",
+                    "secondary-fixed": "#dee2f3",
+                    "error": "#ffb4ab",
+                    "inverse-surface": "#e4e1ed",
+                    "on-background": "#e4e1ed",
+                    "on-error": "#690005",
+                    "secondary-fixed-dim": "#c2c6d7",
+                    "tertiary": "#ffb783",
+                    "on-primary-container": "#0d0096",
+                    "on-surface-variant": "#c7c4d7",
+                    "surface-container-highest": "#34343d",
+                    "surface-container-high": "#292932",
+                    "on-secondary": "#2b303d",
+                    "background": "#13131b",
+                    "primary-container": "#8083ff",
+                    "primary": "#c0c1ff",
+                    "surface-tint": "#c0c1ff",
+                    "primary-fixed-dim": "#c0c1ff",
+                    "on-secondary-fixed": "#161b27"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "container_padding": "24px",
+                    "base_unit": "4px",
+                    "navbar_height": "56px",
+                    "sidebar_width": "240px"
+            },
+            "fontFamily": {
+                    "body-strong": ["Inter"],
+                    "caption": ["Inter"],
+                    "label-mono": ["JetBrains Mono"],
+                    "h3": ["DM Sans"],
+                    "h2": ["DM Sans"],
+                    "body": ["Inter"],
+                    "h1": ["DM Sans"]
+            },
+            "fontSize": {
+                    "body-strong": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "caption": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "label-mono": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "h3": ["20px", {"lineHeight": "28px", "letterSpacing": "0", "fontWeight": "700"}],
+                    "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "h1": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .texture-overlay {
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c7c4d7' fill-opacity='0.03' fill-rule='evenodd'%3E%3Ccircle cx='2' cy='2' r='1'/%3E%3C/g%3E%3C/svg%3E");
+        }
+        /* Custom scrollbar for Kanban */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #34343d; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #464554; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex overflow-hidden font-body">
+<!-- Texture Background -->
+<div class="fixed inset-0 pointer-events-none z-0 texture-overlay mix-blend-overlay"></div>
+<!-- SideNavBar (From JSON) -->
+<aside class="bg-surface dark:bg-surface border-r border-outline-variant dark:border-outline-variant fixed left-0 top-0 h-full w-sidebar_width flex flex-col h-full py-4 z-50">
+<!-- Header -->
+<div class="px-gutter mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[20px]">code_blocks</span>
+</div>
+<div>
+<h2 class="font-h3 text-h3 font-bold text-on-surface dark:text-on-surface leading-tight">DevTrack</h2>
+<p class="font-label-mono text-[10px] text-on-surface-variant uppercase tracking-wider">V-Core Engine</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-1 w-full font-body text-body">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-on-surface-variant border-l-2 border-transparent hover:bg-surface-variant dark:hover:bg-surface-variant hover:text-on-surface dark:hover:text-on-surface transition-colors duration-150 ease-linear" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-on-surface-variant border-l-2 border-transparent hover:bg-surface-variant dark:hover:bg-surface-variant hover:text-on-surface dark:hover:text-on-surface transition-colors duration-150 ease-linear" href="#">
+<span class="material-symbols-outlined text-[20px]">list_alt</span>
+                Tasks
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-on-surface-variant border-l-2 border-transparent hover:bg-surface-variant dark:hover:bg-surface-variant hover:text-on-surface dark:hover:text-on-surface transition-colors duration-150 ease-linear" href="#">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+                Backlog
+            </a>
+<!-- Active State Navigation -->
+<a class="flex items-center gap-3 px-4 py-2 text-primary dark:text-primary border-l-2 border-primary bg-primary/5 transition-colors duration-150 ease-linear font-bold" href="#">
+<span class="material-symbols-outlined text-[20px] fill-icon">view_kanban</span>
+                Board
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-on-surface-variant border-l-2 border-transparent hover:bg-surface-variant dark:hover:bg-surface-variant hover:text-on-surface dark:hover:text-on-surface transition-colors duration-150 ease-linear" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+                Team
+            </a>
+</nav>
+<div class="mt-auto px-gutter w-full">
+<button class="w-full flex items-center justify-center gap-2 bg-primary hover:bg-inverse-primary text-on-primary py-2 px-4 rounded-lg font-body-strong text-body-strong transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Task
+            </button>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="ml-sidebar_width w-[calc(100%-240px)] flex flex-col h-screen relative z-10">
+<!-- TopAppBar (From JSON) -->
+<header class="bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline-variant docked fixed top-0 w-[calc(100%-240px)] h-navbar_height flex items-center justify-between px-gutter z-40">
+<!-- Left Side: Context / Search Shell -->
+<div class="flex items-center gap-4 w-1/3">
+<div class="relative w-full max-w-xs group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full bg-background border border-outline-variant rounded-full py-1.5 pl-10 pr-4 font-label-mono text-label-mono text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary transition-colors" placeholder="Search tasks, commits..." type="text"/>
+</div>
+</div>
+<!-- Right Side: Actions -->
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-surface-variant dark:hover:bg-surface-variant p-2 rounded-full transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-variant dark:hover:bg-surface-variant p-2 rounded-full transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center border border-outline-variant cursor-pointer">
+<span class="font-label-mono text-label-mono text-secondary">ME</span>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="mt-navbar_height flex-1 overflow-auto flex flex-col">
+<!-- Project Header (Developer View - Read Only) -->
+<div class="px-container_padding py-6 border-b border-outline-variant/30 shrink-0">
+<div class="flex flex-col gap-4">
+<!-- Breadcrumb -->
+<div class="flex items-center gap-2 font-label-mono text-label-mono text-on-surface-variant">
+<span class="hover:text-primary cursor-pointer transition-colors">Dashboard</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface">Marrakech API Project</span>
+</div>
+<!-- Title Row -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="font-h1 text-h1 font-bold text-on-surface tracking-tight">Marrakech API Project</h1>
+<p class="font-body text-body text-on-surface-variant mt-1 max-w-2xl">Modernizing core API endpoints for better throughput.</p>
+</div>
+<!-- Metadata Row (Deadline & Members) -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 text-tertiary-container bg-tertiary-container/10 px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<span class="font-body-strong text-caption">Due May 15</span>
+</div>
+<div class="flex items-center">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full bg-surface-bright border-2 border-surface flex items-center justify-center font-label-mono text-[10px] text-on-surface z-30">ME</div>
+<div class="w-8 h-8 rounded-full bg-secondary-container border-2 border-surface flex items-center justify-center font-label-mono text-[10px] text-secondary z-20">AL</div>
+<div class="w-8 h-8 rounded-full bg-[#2a303c] border-2 border-surface flex items-center justify-center font-label-mono text-[10px] text-on-surface-variant z-10">SJ</div>
+<div class="w-8 h-8 rounded-full bg-surface-variant border-2 border-surface flex items-center justify-center font-label-mono text-[10px] text-on-surface-variant z-0">+2</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Kanban Board Area -->
+<div class="flex-1 p-container_padding flex gap-6 overflow-x-auto items-start h-full pb-8">
+<!-- Column: TO DO -->
+<div class="flex flex-col gap-3 min-w-[320px] w-[320px] shrink-0 h-full">
+<div class="flex items-center justify-between pb-2">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-on-surface-variant"></span>
+<h3 class="font-body-strong text-body-strong text-on-surface">To Do</h3>
+<span class="px-2 py-0.5 rounded-full bg-surface-variant text-on-surface-variant font-label-mono text-[10px]">4</span>
+</div>
+</div>
+<div class="flex flex-col gap-3 overflow-y-auto pr-1 pb-4">
+<!-- My Task (Urgent) -->
+<div class="bg-surface border-l-[3px] border-l-primary border-t-2 border-t-tertiary-container border-r border-r-outline-variant border-b border-b-outline-variant rounded-lg p-4 flex flex-col gap-3 relative group transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg shadow-black/20">
+<div class="flex justify-between items-start">
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded flex items-center font-label-mono text-[10px] uppercase bg-tertiary-container/20 text-tertiary-container font-bold border border-tertiary-container/30">Urgent</span>
+</div>
+<span class="px-2 py-0.5 rounded flex items-center font-label-mono text-[10px] uppercase bg-primary-container text-on-primary-container">Mine</span>
+</div>
+<div>
+<h4 class="font-body-strong text-body-strong text-on-surface font-bold">Refactor Auth Middleware</h4>
+<p class="font-body text-body text-on-surface-variant line-clamp-2 mt-1 text-[13px] leading-relaxed">Update JWT validation logic to support new asymmetric key rotation schema before next release.</p>
+</div>
+<div class="flex items-center justify-between mt-2 pt-3 border-t border-outline-variant/50">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-bright flex items-center justify-center font-label-mono text-[10px] text-on-surface">ME</div>
+</div>
+<!-- Developer Interactive Controls -->
+<div class="hidden group-hover:flex items-center gap-2">
+<div class="flex bg-surface-variant rounded-md overflow-hidden border border-outline-variant">
+<button class="px-2 py-1 hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-colors flex items-center" title="Move to In Progress">
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+<button class="bg-primary/10 text-primary hover:bg-primary hover:text-on-primary px-3 py-1 rounded-full font-label-mono text-[10px] transition-colors">Start</button>
+</div>
+</div>
+</div>
+<!-- Other Task (Dimmed, No Interaction) -->
+<div class="bg-surface border border-outline-variant rounded-lg p-4 flex flex-col gap-3 opacity-60">
+<div class="flex justify-between items-start">
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded flex items-center font-label-mono text-[10px] uppercase bg-surface-variant text-on-surface-variant">Backend</span>
+</div>
+</div>
+<div>
+<h4 class="font-body-strong text-body-strong text-on-surface font-bold">Database Migration Script</h4>
+<p class="font-body text-body text-on-surface-variant line-clamp-2 mt-1 text-[13px]">Write raw SQL down-migration script for the users table schema changes.</p>
+</div>
+<div class="flex items-center justify-between mt-2 pt-3 border-t border-outline-variant/50">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary-container flex items-center justify-center font-label-mono text-[10px] text-secondary">AL</div>
+<span class="font-body text-[11px] text-on-surface-variant">Alex L.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: IN PROGRESS -->
+<div class="flex flex-col gap-3 min-w-[320px] w-[320px] shrink-0 h-full">
+<div class="flex items-center justify-between pb-2">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<h3 class="font-body-strong text-body-strong text-on-surface">In Progress</h3>
+<span class="px-2 py-0.5 rounded-full bg-primary/20 text-primary font-label-mono text-[10px]">2</span>
+</div>
+</div>
+<div class="flex flex-col gap-3 overflow-y-auto pr-1 pb-4">
+<!-- My Task (Normal) -->
+<div class="bg-surface border-l-[3px] border-l-primary border border-outline-variant rounded-lg p-4 flex flex-col gap-3 relative group transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg shadow-black/20">
+<div class="flex justify-between items-start">
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded flex items-center font-label-mono text-[10px] uppercase bg-surface-variant text-on-surface-variant">API</span>
+</div>
+<span class="px-2 py-0.5 rounded flex items-center font-label-mono text-[10px] uppercase bg-primary-container text-on-primary-container">Mine</span>
+</div>
+<div>
+<h4 class="font-body-strong text-body-strong text-on-surface font-bold">Optimize /v2/data payload</h4>
+<p class="font-body text-body text-on-surface-variant line-clamp-2 mt-1 text-[13px]">Implement gzip compression and remove redundant nested objects from response.</p>
+</div>
+<div class="flex items-center justify-between mt-2 pt-3 border-t border-outline-variant/50">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-bright flex items-center justify-center font-label-mono text-[10px] text-on-surface">ME</div>
+</div>
+<!-- Developer Interactive Controls -->
+<div class="hidden group-hover:flex items-center gap-2">
+<div class="flex bg-surface-variant rounded-md overflow-hidden border border-outline-variant">
+<button class="px-2 py-1 hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-colors flex items-center border-r border-outline-variant" title="Move to To Do">
+<span class="material-symbols-outlined text-[14px]">arrow_back</span>
+</button>
+<button class="px-2 py-1 hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-colors flex items-center" title="Move to Done">
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+<button class="bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary px-3 py-1 rounded-full font-label-mono text-[10px] transition-colors">Update</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: DONE -->
+<div class="flex flex-col gap-3 min-w-[320px] w-[320px] shrink-0 h-full">
+<div class="flex items-center justify-between pb-2">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<h3 class="font-body-strong text-body-strong text-on-surface text-on-surface-variant">Done</h3>
+<span class="px-2 py-0.5 rounded-full bg-surface-variant text-on-surface-variant font-label-mono text-[10px]">8</span>
+</div>
+</div>
+<div class="flex flex-col gap-3 overflow-y-auto pr-1 pb-4">
+<!-- Other Task (Dimmed) -->
+<div class="bg-surface border border-outline-variant rounded-lg p-4 flex flex-col gap-3 opacity-60 grayscale-[50%]">
+<div class="flex justify-between items-start">
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded flex items-center font-label-mono text-[10px] uppercase bg-surface-variant text-on-surface-variant line-through">Setup</span>
+</div>
+</div>
+<div>
+<h4 class="font-body-strong text-body-strong text-on-surface font-bold line-through">Initialize Project Repo</h4>
+<p class="font-body text-body text-on-surface-variant line-clamp-1 mt-1 text-[13px]">Setup baseline infrastructure.</p>
+</div>
+<div class="flex items-center justify-between mt-2 pt-3 border-t border-outline-variant/50">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-[#2a303c] flex items-center justify-center font-label-mono text-[10px] text-on-surface-variant">SJ</div>
+<span class="font-body text-[11px] text-on-surface-variant">Sam J.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
