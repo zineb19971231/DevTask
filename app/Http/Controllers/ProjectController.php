@@ -11,7 +11,21 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Auth::user()->projects()->with('members')->get();
+        $projects = Auth::user()->projects()
+            ->with(['members'])
+            ->withCount([
+                'tasks as total_tasks',
+                'tasks as completed_tasks' => fn ($q) => $q->where('statut', 'done'),
+            ])
+            ->get();
+
+        // Calculate progress for each project
+        $projects->each(function ($project) {
+            $project->progress = $project->total_tasks > 0 
+                ? round(($project->completed_tasks / $project->total_tasks) * 100) 
+                : 0;
+        });
+
         return view('projects.index', compact('projects'));
     }
 
@@ -22,67 +36,25 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        // Will implement later
-        return redirect()->route('dashboard');
+        $validated = $request->validate([
+            'titre' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'deadline' => 'nullable|date',
+        ]);
+
+        $project = Project::create($validated);
+        
+        // Assign current user as lead
+        $project->members()->attach(Auth::id(), ['role' => 'lead']);
+
+        return redirect()->route('dashboard')->with('success', 'Project created.');
     }
 
     public function show(Project $project)
     {
         $user = Auth::user();
-        
-        // Dummy tasks data
-        $tasks = collect([
-            (object)[
-                'id' => 1,
-                'title' => 'Design DB Schema for V2',
-                'description' => 'Map out the relational changes needed for the new rate-limiting tables.',
-                'status' => 'todo',
-                'priority' => 'low',
-                'is_urgent' => false,
-                'assignedUser' => (object)['name' => 'Alex Mercer', 'role' => 'lead'],
-                'project' => $project,
-            ],
-            (object)[
-                'id' => 2,
-                'title' => 'Set up staging CI/CD pipeline',
-                'description' => 'Ensure automated tests run on PR to staging branch.',
-                'status' => 'todo',
-                'priority' => 'medium',
-                'is_urgent' => false,
-                'assignedUser' => (object)['name' => 'Sam K.', 'role' => 'developer'],
-                'project' => $project,
-            ],
-            (object)[
-                'id' => 3,
-                'title' => 'Implement JWT Auth Middleware',
-                'description' => 'Replace deprecated token validation logic before rollout.',
-                'status' => 'in_progress',
-                'priority' => 'high',
-                'is_urgent' => true,
-                'assignedUser' => (object)['name' => 'Jamie D.', 'role' => 'developer'],
-                'project' => $project,
-            ],
-            (object)[
-                'id' => 4,
-                'title' => 'Refactor User Endpoints',
-                'description' => 'Consolidate GET/POST/PUT handlers into generic controllers.',
-                'status' => 'in_progress',
-                'priority' => 'medium',
-                'is_urgent' => false,
-                'assignedUser' => (object)['name' => 'Alex Mercer', 'role' => 'lead'],
-                'project' => $project,
-            ],
-            (object)[
-                'id' => 5,
-                'title' => 'Audit existing logging framework',
-                'description' => 'Review CloudWatch retention policies.',
-                'status' => 'done',
-                'priority' => 'low',
-                'is_urgent' => false,
-                'assignedUser' => (object)['name' => 'Sam K.', 'role' => 'developer'],
-                'project' => $project,
-            ],
-        ]);
+        $project->load(['members', 'tasks.user']);
+        $tasks = $project->tasks;
 
         if ($user->role === 'lead') {
             return view('projects.show-lead', compact('project', 'tasks'));
@@ -98,8 +70,15 @@ class ProjectController extends Controller
 
     public function update(Request $request, Project $project)
     {
-        // Will implement later
-        return redirect()->route('projects.show', $project);
+        $validated = $request->validate([
+            'titre' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'deadline' => 'nullable|date',
+        ]);
+
+        $project->update($validated);
+
+        return redirect()->route('projects.show', $project)->with('success', 'Project updated.');
     }
 
     public function destroy(Project $project)
@@ -130,5 +109,24 @@ class ProjectController extends Controller
         $project = Project::withTrashed()->findOrFail($projectId);
         $project->forceDelete();
         return redirect()->route('projects.archives');
+    }
+
+    public function invite(Request $request, Project $project)
+    {
+        $request->validate(['email' => 'required|email|exists:users,email']);
+        
+        $user = \App\Models\User::where('email', $request->email)->first();
+        
+        if (!$project->members()->where('user_id', $user->id)->exists()) {
+            $project->members()->attach($user->id, ['role' => 'developer']);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    public function removeMember(Project $project, \App\Models\User $user)
+    {
+        $project->members()->detach($user->id);
+        return response()->json(['success' => true]);
     }
 }

@@ -53,4 +53,10 @@ class DashboardController extends Controller
 
         return view('dashboard', compact('projects', 'myTasks', 'stats'));
     }
+
+    public function team()
+    {
+        $users = \App\Models\User::withCount('tasks')->get();
+        return view('team', compact('users'));
+    }
 }

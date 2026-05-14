@@ -40,19 +40,23 @@
                 <span class="material-symbols-outlined">dashboard</span>
                 Dashboard
             </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-2 text-on-surface-variant border-l-2 border-transparent hover:bg-surface-variant hover:text-on-surface transition-colors duration-150 ease-linear rounded-r-lg">
+            <a href="{{ route('projects.index') }}" class="flex items-center gap-3 px-4 py-2 {{ request()->routeIs('projects.index') ? 'text-primary border-l-2 border-primary bg-primary/5' : 'text-on-surface-variant border-l-2 border-transparent hover:bg-surface-variant hover:text-on-surface' }} transition-colors duration-150 ease-linear rounded-r-lg">
+                <span class="material-symbols-outlined">folder</span>
+                Projects
+            </a>
+            <a href="{{ route('tasks.global') }}" class="flex items-center gap-3 px-4 py-2 {{ request()->routeIs('tasks.global') ? 'text-primary border-l-2 border-primary bg-primary/5' : 'text-on-surface-variant border-l-2 border-transparent hover:bg-surface-variant hover:text-on-surface' }} transition-colors duration-150 ease-linear rounded-r-lg">
                 <span class="material-symbols-outlined">list_alt</span>
                 Tasks
             </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-2 text-on-surface-variant border-l-2 border-transparent hover:bg-surface-variant hover:text-on-surface transition-colors duration-150 ease-linear rounded-r-lg">
+            <a href="{{ route('backlog') }}" class="flex items-center gap-3 px-4 py-2 {{ request()->routeIs('backlog') ? 'text-primary border-l-2 border-primary bg-primary/5' : 'text-on-surface-variant border-l-2 border-transparent hover:bg-surface-variant hover:text-on-surface' }} transition-colors duration-150 ease-linear rounded-r-lg">
                 <span class="material-symbols-outlined">inventory_2</span>
                 Backlog
             </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-2 text-on-surface-variant border-l-2 border-transparent hover:bg-surface-variant hover:text-on-surface transition-colors duration-150 ease-linear rounded-r-lg">
+            <a href="{{ route('board') }}" class="flex items-center gap-3 px-4 py-2 {{ request()->routeIs('board') ? 'text-primary border-l-2 border-primary bg-primary/5' : 'text-on-surface-variant border-l-2 border-transparent hover:bg-surface-variant hover:text-on-surface' }} transition-colors duration-150 ease-linear rounded-r-lg">
                 <span class="material-symbols-outlined">view_kanban</span>
                 Board
             </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-2 text-on-surface-variant border-l-2 border-transparent hover:bg-surface-variant hover:text-on-surface transition-colors duration-150 ease-linear rounded-r-lg">
+            <a href="{{ route('team') }}" class="flex items-center gap-3 px-4 py-2 {{ request()->routeIs('team') ? 'text-primary border-l-2 border-primary bg-primary/5' : 'text-on-surface-variant border-l-2 border-transparent hover:bg-surface-variant hover:text-on-surface' }} transition-colors duration-150 ease-linear rounded-r-lg">
                 <span class="material-symbols-outlined">group</span>
                 Team
             </a>
@@ -79,10 +83,16 @@
                     </div>
                 </div>
             @endauth
-            <button class="w-full bg-primary text-on-primary font-body-strong text-body-strong py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-primary-fixed transition-colors">
+            @if(auth()->user()->role === 'lead')
+            <a href="{{ route('projects.create') }}" class="w-full bg-surface-variant text-on-surface font-body-strong text-body-strong py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-outline-variant transition-colors mb-2">
+                <span class="material-symbols-outlined text-[18px]">create_new_folder</span>
+                New Project
+            </a>
+            @endif
+            <a href="{{ route('projects.index') }}" class="w-full bg-primary text-on-primary font-body-strong text-body-strong py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-primary-fixed transition-colors">
                 <span class="material-symbols-outlined text-[18px]">add</span>
                 New Task
-            </button>
+            </a>
         </div>
     </nav>
 

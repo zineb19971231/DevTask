@@ -18,21 +18,37 @@ Route::middleware(['auth'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // Tasks (Global)
+    Route::get('/tasks', [TaskController::class, 'globalIndex'])->name('tasks.global');
+    
+    // Backlog (Global)
+    Route::get('/backlog', [TaskController::class, 'backlog'])->name('backlog');
+
+    // Board (Global)
+    Route::get('/board', [TaskController::class, 'board'])->name('board');
+
+    // Team
+    Route::get('/team', [DashboardController::class, 'team'])->name('team');
+
     // Project Archives
     Route::get('/projects/archives', [ProjectController::class, 'archives'])->name('projects.archives');
     Route::post('/projects/{project}/restore', [ProjectController::class, 'restore'])->name('projects.restore');
     Route::delete('/projects/{project}/force-delete', [ProjectController::class, 'forceDelete'])->name('projects.force-delete');
 
-    // Project resource routes (except archive which is handled above)
-    Route::resource('projects', ProjectController::class)->except(['archives', 'restore', 'forceDelete']);
+    // Project resource routes
+    Route::resource('projects', ProjectController::class);
 
-    // Task routes (nested under projects)
+    // Project member routes
+    Route::post('/projects/{project}/invite', [ProjectController::class, 'invite'])->name('projects.invite');
+    Route::delete('/projects/{project}/members/{user}', [ProjectController::class, 'removeMember'])->name('projects.remove-member');
+
+    // Task routes (nested under projects for creation/editing)
     Route::prefix('projects/{project}')->group(function () {
         Route::resource('tasks', TaskController::class)->except(['index', 'show']);
         Route::patch('/tasks/{task}/status', [TaskController::class, 'updateStatus'])->name('tasks.update-status');
     });
 
-    // Task index for a project (API-like but returns Blade view)
+    // Task index for a project
     Route::get('/projects/{project}/tasks', [TaskController::class, 'index'])->name('tasks.index');
 });
 

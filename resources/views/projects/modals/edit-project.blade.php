@@ -14,9 +14,9 @@
 
             <!-- Title -->
             <div class="flex flex-col gap-2">
-                <label class="font-label-mono text-label-mono text-on-surface-variant uppercase" for="title">Title</label>
-                <input id="title" class="bg-surface-container border border-outline-variant rounded-md px-3 py-2 text-body font-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full placeholder-on-surface-variant font-label-mono"
-                       type="text" name="title" value="{{ old('title', $project->title) }}" required>
+                <label class="font-label-mono text-label-mono text-on-surface-variant uppercase" for="titre">Title</label>
+                <input id="titre" class="bg-surface-container border border-outline-variant rounded-md px-3 py-2 text-body font-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full placeholder-on-surface-variant font-label-mono"
+                       type="text" name="titre" value="{{ old('titre', $project->titre) }}" required>
             </div>
 
             <!-- Description -->
