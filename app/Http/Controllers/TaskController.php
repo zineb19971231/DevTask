@@ -38,7 +38,8 @@ class TaskController extends Controller
         ];
 
         if (isset($transitions[$task->status])) {
-            $task->update(['status' => $transitions[$task->status]]);
+            $task->status = $transitions[$task->status];
+            $task->save();
         }
 
         return back()->with('success', 'Status updated.');

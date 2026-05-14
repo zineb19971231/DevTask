@@ -120,7 +120,7 @@
             <div class="lg:col-span-2 space-y-4">
                 <h3 class="font-h3 text-h3 text-on-surface font-bold">My Tasks — Due Soon</h3>
                 <div class="surface-card border rounded-lg flex flex-col">
-                    @forelse($tasks as $task)
+                    @forelse($myTasks as $task)
                         <div class="group flex items-center justify-between p-4 border-b border-outline-variant {{ $task->is_urgent ? 'bg-error/5 border-l-[3px] border-l-error' : 'border-l-[3px] border-l-transparent' }} hover:bg-surface-variant transition-colors">
                             <div class="flex items-center gap-4">
                                 <span class="bg-{{ $task->status === 'done' ? 'surface-container-highest' : ($task->status === 'in_progress' ? 'primary/20 text-primary' : 'surface-container-highest text-on-surface-variant') }} font-label-mono text-label-mono px-2 py-1 rounded-full whitespace-nowrap w-24 text-center">

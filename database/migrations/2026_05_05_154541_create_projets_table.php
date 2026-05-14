@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->date('deadline');
             $table->boolean('est_archive')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
