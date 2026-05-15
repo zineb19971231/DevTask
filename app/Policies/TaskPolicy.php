@@ -2,65 +2,41 @@
 
 namespace App\Policies;
 
+use App\Models\Project;
+use App\Models\Task;
 use App\Models\User;
-use App\Models\task;
 use Illuminate\Auth\Access\Response;
 
 class TaskPolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
+    public function view(User $user, Task $task): bool
     {
-        return false;
+        return $task->project->members()->where('user_id', $user->id)->exists();
     }
 
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, task $task): bool
+    public function create(User $user, Project $project): bool
     {
-        return false;
+        return $project->members()->where('user_id', $user->id)->wherePivot('role', 'lead')->exists();
     }
 
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
+    public function update(User $user, Task $task): bool
     {
-        return false;
+        return $task->project->members()->where('user_id', $user->id)->wherePivot('role', 'lead')->exists();
     }
 
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, task $task): bool
+    public function updateStatus(User $user, Task $task): bool
     {
-        return false;
+        // Assigned developer can update status
+        if ($task->user_id === $user->id) {
+            return true;
+        }
+        
+        // Lead can also update status
+        return $this->update($user, $task);
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, task $task): bool
+    public function delete(User $user, Task $task): bool
     {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, task $task): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, task $task): bool
-    {
-        return false;
+        return $this->update($user, $task);
     }
 }

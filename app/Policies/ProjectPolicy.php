@@ -6,7 +6,7 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class ProjetPolicy
+class ProjectPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -29,7 +29,8 @@ class ProjetPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        // Allow if role is lead OR if role is not set (defaulting to lead for safety during migration)
+        return $user->role === 'lead' || is_null($user->role);
     }
 
     /**
@@ -44,6 +45,16 @@ class ProjetPolicy
      * Determine whether the user can delete the model.
      */
     public function delete(User $user, Project $project): bool
+    {
+        return $this->update($user, $project);
+    }
+
+    public function restore(User $user, Project $project): bool
+    {
+        return $this->update($user, $project);
+    }
+
+    public function forceDelete(User $user, Project $project): bool
     {
         return $this->update($user, $project);
     }

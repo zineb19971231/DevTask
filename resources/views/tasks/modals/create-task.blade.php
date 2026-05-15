@@ -16,9 +16,9 @@
 
             <!-- Task Title -->
             <div class="flex flex-col gap-2">
-                <label class="font-body-strong text-body-strong text-on-surface" for="task-title">Task Title</label>
-                <input id="task-title" class="w-full h-12 bg-surface border border-outline-variant rounded-lg px-4 font-body text-body text-on-surface placeholder:text-on-surface-variant placeholder:font-label-mono placeholder:text-label-mono focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-                       type="text" name="title" placeholder="e.g. Build authentication endpoint" required>
+                <label class="font-body-strong text-body-strong text-on-surface" for="task-titre">Task Title</label>
+                <input id="task-titre" class="w-full h-12 bg-surface border border-outline-variant rounded-lg px-4 font-body text-body text-on-surface placeholder:text-on-surface-variant placeholder:font-label-mono placeholder:text-label-mono focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                       type="text" name="titre" placeholder="e.g. Build authentication endpoint" required>
             </div>
 
             <!-- Description -->
@@ -47,7 +47,7 @@
                         <button type="button" class="priority-btn flex-1 h-full rounded-[4px] border border-outline-variant bg-surface text-on-surface font-body-strong text-body-strong hover:bg-surface-variant transition-colors" data-priority="low">Low</button>
                         <button type="button" class="priority-btn flex-1 h-full rounded-[4px] border-none bg-amber-500/20 text-amber-500 font-body-strong text-body-strong ring-1 ring-amber-500/50" data-priority="medium">Medium</button>
                         <button type="button" class="priority-btn flex-1 h-full rounded-[4px] border border-outline-variant bg-surface text-on-surface font-body-strong text-body-strong hover:bg-surface-variant transition-colors" data-priority="high">High</button>
-                        <input type="hidden" name="priority" id="priority-input" value="medium">
+                        <input type="hidden" name="priorite" id="priority-input" value="medium">
                     </div>
                 </div>
             </div>
@@ -55,10 +55,10 @@
             <!-- Assign To -->
             <div class="flex flex-col gap-2 relative">
                 <label class="font-body-strong text-body-strong text-on-surface">Assign To</label>
-                <select name="assigned_user_id" class="w-full h-[48px] bg-surface border border-outline-variant rounded-lg px-4 font-body text-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
+                <select name="user_id" class="w-full h-[48px] bg-surface border border-outline-variant rounded-lg px-4 font-body text-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" required>
                     <option value="">Select developer...</option>
-                    @foreach($project->members->where('role', 'developer') as $member)
-                        <option value="{{ $member->id }}">{{ $member->name }}</option>
+                    @foreach($project->members as $member)
+                        <option value="{{ $member->id }}">{{ $member->name }} ({{ $member->role }})</option>
                     @endforeach
                 </select>
             </div>

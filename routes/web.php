@@ -29,6 +29,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Team
     Route::get('/team', [DashboardController::class, 'team'])->name('team');
+    Route::post('/team', [DashboardController::class, 'storeUser'])->name('team.store');
+    Route::delete('/team/{user}', [DashboardController::class, 'destroyUser'])->name('team.destroy');
 
     // Project Archives
     Route::get('/projects/archives', [ProjectController::class, 'archives'])->name('projects.archives');

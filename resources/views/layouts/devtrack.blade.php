@@ -52,10 +52,7 @@
                 <span class="material-symbols-outlined">inventory_2</span>
                 Backlog
             </a>
-            <a href="{{ route('board') }}" class="flex items-center gap-3 px-4 py-2 {{ request()->routeIs('board') ? 'text-primary border-l-2 border-primary bg-primary/5' : 'text-on-surface-variant border-l-2 border-transparent hover:bg-surface-variant hover:text-on-surface' }} transition-colors duration-150 ease-linear rounded-r-lg">
-                <span class="material-symbols-outlined">view_kanban</span>
-                Board
-            </a>
+
             <a href="{{ route('team') }}" class="flex items-center gap-3 px-4 py-2 {{ request()->routeIs('team') ? 'text-primary border-l-2 border-primary bg-primary/5' : 'text-on-surface-variant border-l-2 border-transparent hover:bg-surface-variant hover:text-on-surface' }} transition-colors duration-150 ease-linear rounded-r-lg">
                 <span class="material-symbols-outlined">group</span>
                 Team
@@ -83,16 +80,14 @@
                     </div>
                 </div>
             @endauth
-            @if(auth()->user()->role === 'lead')
             <a href="{{ route('projects.create') }}" class="w-full bg-surface-variant text-on-surface font-body-strong text-body-strong py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-outline-variant transition-colors mb-2">
                 <span class="material-symbols-outlined text-[18px]">create_new_folder</span>
-                New Project
+                Add Project
             </a>
-            @endif
-            <a href="{{ route('projects.index') }}" class="w-full bg-primary text-on-primary font-body-strong text-body-strong py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-primary-fixed transition-colors">
+            <button onclick="document.getElementById('global-create-task-modal').classList.remove('hidden'); document.getElementById('global-create-task-modal-content').classList.remove('hidden')" class="w-full bg-primary text-on-primary font-body-strong text-body-strong py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-primary-fixed transition-colors">
                 <span class="material-symbols-outlined text-[18px]">add</span>
-                New Task
-            </a>
+                Add Task
+            </button>
         </div>
     </nav>
 
@@ -121,10 +116,34 @@
 
         <!-- Page Content -->
         <div class="flex-1 overflow-y-auto p-container_padding">
+            @if(session('success'))
+                <div class="mb-4 p-4 bg-success/20 border border-success/50 text-success rounded-lg flex items-center gap-3">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="mb-4 p-4 bg-error/20 border border-error/50 text-error rounded-lg">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="material-symbols-outlined">error</span>
+                        <p class="font-bold">Please fix the following errors:</p>
+                    </div>
+                    <ul class="list-disc list-inside ml-8 text-sm">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             @yield('content')
         </div>
     </main>
 
     @stack('modals')
+    @auth
+        @include('tasks.modals.global-create-task')
+    @endauth
 </body>
 </html>

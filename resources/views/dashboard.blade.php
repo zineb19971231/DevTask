@@ -86,11 +86,11 @@
             @endforelse
         </div>
 
-        <!-- New Project Button -->
+        <!-- Add Project Button -->
         <div class="fixed bottom-8 right-8">
             <a href="{{ route('projects.create') }}" class="bg-primary text-on-primary font-body-strong text-body-strong px-4 py-3 rounded-full flex items-center gap-2 hover:bg-primary-fixed transition-colors shadow-lg">
                 <span class="material-symbols-outlined text-[18px]">add</span>
-                New Project
+                Add Project
             </a>
         </div>
     @else

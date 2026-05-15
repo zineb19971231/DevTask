@@ -12,6 +12,10 @@
         <div>
             <p class="text-on-surface-variant">Manage and track all your tasks across projects.</p>
         </div>
+        <button onclick="document.getElementById('global-create-task-modal').classList.remove('hidden'); document.getElementById('global-create-task-modal-content').classList.remove('hidden')" class="bg-primary text-on-primary font-body-strong px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary-fixed transition-colors">
+            <span class="material-symbols-outlined text-[18px]">add</span>
+            Add Task
+        </button>
     </div>
 
     <div class="bg-surface border border-outline-variant rounded-xl overflow-hidden">
@@ -77,14 +81,13 @@
                     </td>
                 </tr>
                 @empty
-                <tr>
                     <td colspan="6" class="px-6 py-12 text-center text-on-surface-variant">
                         <div class="flex flex-col items-center gap-2">
                             <span class="material-symbols-outlined text-4xl opacity-20">task</span>
                             <p>No tasks found.</p>
+                            <button onclick="document.getElementById('global-create-task-modal').classList.remove('hidden'); document.getElementById('global-create-task-modal-content').classList.remove('hidden')" class="text-primary hover:underline mt-2">Add your first task</button>
                         </div>
                     </td>
-                </tr>
                 @endforelse
             </tbody>
         </table>

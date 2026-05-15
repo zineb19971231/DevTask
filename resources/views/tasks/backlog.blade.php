@@ -12,6 +12,10 @@
         <div>
             <p class="text-on-surface-variant">Tasks waiting to be started or in the backlog.</p>
         </div>
+        <button onclick="document.getElementById('global-create-task-modal').classList.remove('hidden'); document.getElementById('global-create-task-modal-content').classList.remove('hidden')" class="bg-primary text-on-primary font-body-strong px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary-fixed transition-colors">
+            <span class="material-symbols-outlined text-[18px]">add</span>
+            Add Task
+        </button>
     </div>
 
     <div class="grid gap-4">

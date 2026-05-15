@@ -18,10 +18,10 @@ class TaskResource extends JsonResource
             'priority' => $this->priority,
             'deadline' => $this->deadline?->format('Y-m-d'),
             'deadline_status' => $this->deadline_status, // accessor
-            'assigned_user' => $this->assignedUser ? [
-                'id' => $this->assignedUser->id,
-                'name' => $this->assignedUser->name,
-                'email' => $this->assignedUser->email,
+            'assigned_user' => $this->user ? [
+                'id' => $this->user->id,
+                'name' => $this->user->name,
+                'email' => $this->user->email,
             ] : null,
             'project' => [
                 'id' => $this->project->id,

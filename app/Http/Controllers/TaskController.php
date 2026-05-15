@@ -19,37 +19,45 @@ class TaskController extends Controller
     public function globalIndex()
     {
         $user = auth()->user();
-        if ($user->role === 'lead') {
-            $tasks = Task::with(['project', 'user'])->latest()->get();
-        } else {
-            $tasks = Task::where('user_id', $user->id)->with(['project', 'user'])->latest()->get();
-        }
+        
+        // Filter tasks to only those belonging to projects the user is part of
+        $tasks = Task::whereHas('project', function($query) use ($user) {
+            $query->whereHas('members', function($q) use ($user) {
+                $q->where('user_id', $user->id);
+            });
+        })->with(['project', 'user'])->latest()->get();
+
         return view('tasks.global', compact('tasks'));
     }
 
     public function backlog()
     {
         $user = auth()->user();
-        $query = Task::whereIn('statut', ['to do', 'backlog'])->with(['project', 'user']);
         
-        if ($user->role !== 'lead') {
-            $query->where('user_id', $user->id);
-        }
+        $tasks = Task::whereIn('statut', ['to do', 'backlog'])
+            ->whereHas('project', function($query) use ($user) {
+                $query->whereHas('members', function($q) use ($user) {
+                    $q->where('user_id', $user->id);
+                });
+            })
+            ->with(['project', 'user'])
+            ->latest()
+            ->get();
 
-        $tasks = $query->latest()->get();
         return view('tasks.backlog', compact('tasks'));
     }
 
     public function board()
     {
         $user = auth()->user();
-        $query = Task::with(['project', 'user']);
-
-        if ($user->role !== 'lead') {
-            $query->where('user_id', $user->id);
-        }
-
-        $tasks = $query->get();
+        
+        $tasks = Task::whereHas('project', function($query) use ($user) {
+                $query->whereHas('members', function($q) use ($user) {
+                    $q->where('user_id', $user->id);
+                });
+            })
+            ->with(['project', 'user'])
+            ->get();
         
         $board = [
             'todo'        => $tasks->filter(fn($t) => $t->status === 'todo'),
@@ -102,5 +110,14 @@ class TaskController extends Controller
         $task->delete();
 
         return back()->with('success', 'Task deleted.');
+    }
+
+    public function apiIndex(Project $project)
+    {
+        // Simple auth check if not using middleware properly or for flexibility
+        // $this->authorize('view', $project); 
+        
+        $tasks = $project->tasks()->with('user')->get();
+        return \App\Http\Resources\TaskResource::collection($tasks);
     }
 }

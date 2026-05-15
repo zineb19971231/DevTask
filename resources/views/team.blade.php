@@ -13,7 +13,8 @@
             <p class="text-on-surface-variant">Manage your team and track their contributions.</p>
         </div>
         @if(auth()->user()->role === 'lead')
-        <button class="bg-primary text-on-primary font-body-strong px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary-fixed transition-colors">
+        <button class="bg-primary text-on-primary font-body-strong px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary-fixed transition-colors"
+                onclick="document.getElementById('create-user-modal').classList.remove('hidden'); document.getElementById('create-user-modal-content').classList.remove('hidden')">
             <span class="material-symbols-outlined text-[18px]">person_add</span>
             Invite Member
         </button>
@@ -24,6 +25,15 @@
         @foreach($users as $user)
         <div class="bg-surface border border-outline-variant rounded-xl p-6 flex flex-col items-center text-center group hover:border-primary/50 transition-all">
             <div class="relative mb-4">
+                @if(auth()->user()->role === 'lead' && $user->id !== auth()->id())
+                <form action="{{ route('team.destroy', $user) }}" method="POST" class="absolute -top-2 -right-12 z-10" onsubmit="return confirm('Are you sure you want to remove this member from the system?')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="p-1.5 bg-surface border border-outline-variant rounded-full text-on-surface-variant hover:text-error hover:border-error transition-all shadow-sm" title="Remove from System">
+                        <span class="material-symbols-outlined text-[16px]">close</span>
+                    </button>
+                </form>
+                @endif
                 <div class="w-20 h-20 rounded-full bg-surface-variant p-1 border-2 border-outline-variant group-hover:border-primary/30 transition-colors">
                     <img src="{{ $user->avatar ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuCsL5Cc3pQmi5rSSro3jCgmQKBn9R5lbGTy7zZ7m-wo-VJjji5jWG_BAIBZFqjA-1jLwbBVIQpPxrf7e-DPd2uDFthFHqZsdntH1RVHBp7U9VP_mf0gjbf02vY1Dh5xD_AdWr_bLVWa7A5FFAhc3Zlh5blEMG-dGA6IbbTE5s0d_PDmfq1o4oz2P_awswN-CyGLVsdS7op2FLqEVGQ29E1mZ5jVBEuMXkWMCCxwcdPXWw1_uSmHCPEL8m4FRwoZoib9mr4AAzP286KU' }}" alt="{{ $user->name }}" class="w-full h-full rounded-full object-cover">
                 </div>
@@ -51,4 +61,8 @@
         @endforeach
     </div>
 </div>
+
+@if(auth()->user()->role === 'lead')
+    @include('team.modals.create-user')
+@endif
 @endsection

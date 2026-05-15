@@ -14,24 +14,7 @@
     <form method="POST" action="{{ route('register') }}" class="space-y-6">
         @csrf
 
-        <!-- Role Selector -->
-        <div class="space-y-3">
-            <label class="block font-body-strong text-body-strong text-on-surface-variant">I am joining as a</label>
-            <div class="grid grid-cols-2 gap-3">
-                <button type="button" class="role-btn bg-primary/10 border border-primary text-primary font-body-strong text-body-strong py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors" data-role="lead">
-                    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
-                    Team Lead
-                </button>
-                <button type="button" class="role-btn bg-surface-container-lowest border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-outline font-body-strong text-body-strong py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors" data-role="developer">
-                    <span class="material-symbols-outlined text-[20px]">terminal</span>
-                    Developer
-                </button>
-            </div>
-            <input type="hidden" name="role" id="role" value="lead" required>
-            @error('role')
-                <p class="mt-2 font-caption text-caption text-error">{{ $message }}</p>
-            @enderror
-        </div>
+
 
         <!-- Name -->
         <div>
@@ -112,18 +95,7 @@
     </div>
 
     <script>
-        // Role selector
-        document.querySelectorAll('.role-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.role-btn').forEach(b => {
-                    b.classList.remove('bg-primary/10', 'border-primary', 'text-primary');
-                    b.classList.add('bg-surface-container-lowest', 'border-outline-variant', 'text-on-surface-variant');
-                });
-                this.classList.remove('bg-surface-container-lowest', 'border-outline-variant', 'text-on-surface-variant');
-                this.classList.add('bg-primary/10', 'border-primary', 'text-primary');
-                document.getElementById('role').value = this.dataset.role;
-            });
-        });
+
 
         // Toggle password visibility
         document.querySelectorAll('.toggle-password').forEach(button => {

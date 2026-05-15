@@ -39,7 +39,7 @@ class Project extends Model
 
     public function setTitleAttribute($value)
     {
-        $this->titre = $value;
+        $this->titre = ucfirst($value);
     }
 
     public function users()

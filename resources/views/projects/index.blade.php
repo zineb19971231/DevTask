@@ -12,12 +12,10 @@
         <div>
             <p class="text-on-surface-variant">View and manage all active projects.</p>
         </div>
-        @if(auth()->user()->role === 'lead')
         <a href="{{ route('projects.create') }}" class="bg-primary text-on-primary font-body-strong px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary-fixed transition-colors">
             <span class="material-symbols-outlined text-[18px]">add</span>
-            New Project
+            Add Project
         </a>
-        @endif
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -62,9 +60,7 @@
         <div class="col-span-full py-20 text-center bg-surface border border-dashed border-outline-variant rounded-xl">
              <span class="material-symbols-outlined text-4xl opacity-20 mb-2">folder_open</span>
              <p class="text-on-surface-variant">No active projects found.</p>
-             @if(auth()->user()->role === 'lead')
              <a href="{{ route('projects.create') }}" class="text-primary hover:underline mt-2 inline-block">Create your first project</a>
-             @endif
         </div>
         @endforelse
     </div>

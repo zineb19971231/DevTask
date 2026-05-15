@@ -31,25 +31,31 @@ class Task extends Model
     public function getTitleAttribute() { return $this->titre; }
     public function setTitleAttribute($value) { $this->titre = $value; }
 
-    public function getStatusAttribute()
+    public function getStatutAttribute($value)
     {
-        return str_replace(['to do', 'doing'], ['todo', 'in_progress'], $this->statut);
+        return str_replace(['to do', 'doing'], ['todo', 'in_progress'], $value);
     }
 
-    public function setStatusAttribute($value)
+    public function setStatutAttribute($value)
     {
-        $this->statut = str_replace(['todo', 'in_progress'], ['to do', 'doing'], $value);
+        $this->attributes['statut'] = str_replace(['todo', 'in_progress'], ['to do', 'doing'], $value);
     }
 
-    public function getPriorityAttribute()
+    public function getStatusAttribute() { return $this->statut; }
+    public function setStatusAttribute($value) { $this->statut = $value; }
+
+    public function getPrioriteAttribute($value)
     {
-        return str_replace(['basse', 'moyenne', 'elevee'], ['low', 'medium', 'high'], $this->priorite);
+        return str_replace(['basse', 'moyenne', 'elevee'], ['low', 'medium', 'high'], $value);
     }
 
-    public function setPriorityAttribute($value)
+    public function setPrioriteAttribute($value)
     {
-        $this->priorite = str_replace(['low', 'medium', 'high'], ['basse', 'moyenne', 'elevee'], $value);
+        $this->attributes['priorite'] = str_replace(['low', 'medium', 'high'], ['basse', 'moyenne', 'elevee'], $value);
     }
+
+    public function getPriorityAttribute() { return $this->priorite; }
+    public function setPriorityAttribute($value) { $this->priorite = $value; }
 
     public function user()
     {
@@ -61,6 +67,11 @@ class Task extends Model
         return $this->statut !== 'done' 
             && $this->deadline 
             && \Carbon\Carbon::parse($this->deadline)->isBefore(now()->addHours(48));
+    }
+
+    public function getDeadlineStatusAttribute()
+    {
+        return $this->is_urgent ? 'urgent' : 'normal';
     }
 
     public function scopeUrgent($query)

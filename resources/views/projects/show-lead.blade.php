@@ -28,6 +28,14 @@
                 <span class="material-symbols-outlined text-[18px]">edit</span>
                 Edit Project
             </button>
+            <form action="{{ route('projects.destroy', $project) }}" method="POST" onsubmit="return confirm('Are you sure you want to archive this project?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="h-8 px-3 rounded surface-card font-body-strong text-body-strong text-error hover:bg-error/10 hover:-translate-y-px transition-all flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">inventory_2</span>
+                    Archive Project
+                </button>
+            </form>
         @endcan
         @can('manageMembers', $project)
             <button class="h-8 px-3 rounded surface-card font-body-strong text-body-strong text-on-surface hover:bg-surface-variant hover:-translate-y-px transition-all flex items-center gap-2" onclick="document.getElementById('manage-members-modal').classList.remove('hidden')">
@@ -35,7 +43,7 @@
                 Manage Members
             </button>
         @endcan
-        <button class="h-8 px-4 rounded bg-primary-container text-on-primary-container font-body-strong text-body-strong hover:bg-primary-fixed transition-all active:scale-95 flex items-center gap-2" onclick="document.getElementById('create-task-modal').classList.remove('hidden')">
+        <button class="h-8 px-4 rounded bg-primary-container text-on-primary-container font-body-strong text-body-strong hover:bg-primary-fixed transition-all active:scale-95 flex items-center gap-2" onclick="document.getElementById('create-task-modal').classList.remove('hidden'); document.getElementById('create-task-modal-content').classList.remove('hidden')">
             <span class="material-symbols-outlined text-[18px]">add</span>
             Add Task
         </button>
@@ -76,8 +84,8 @@
                     <h3 class="font-body-strong text-body-strong text-on-surface">To Do</h3>
                     <span class="font-label-mono text-[10px] bg-surface-container-high px-1.5 py-0.5 rounded text-on-surface-variant">{{ $tasks->where('status', 'todo')->count() }}</span>
                 </div>
-                @can('create', App\Models\Task::class)
-                    <button class="text-on-surface-variant hover:text-primary transition-colors" onclick="document.getElementById('create-task-modal').classList.remove('hidden')">
+                @can('create', [\App\Models\Task::class, $project])
+                    <button class="text-on-surface-variant hover:text-primary transition-colors" onclick="document.getElementById('create-task-modal').classList.remove('hidden'); document.getElementById('create-task-modal-content').classList.remove('hidden')">
                         <span class="material-symbols-outlined text-[18px]">add</span>
                     </button>
                 @endcan
@@ -97,8 +105,8 @@
                     <h3 class="font-body-strong text-body-strong text-on-surface">In Progress</h3>
                     <span class="font-label-mono text-[10px] bg-primary-container/20 text-primary px-1.5 py-0.5 rounded">{{ $tasks->where('status', 'in_progress')->count() }}</span>
                 </div>
-                @can('create', App\Models\Task::class)
-                    <button class="text-on-surface-variant hover:text-primary transition-colors" onclick="document.getElementById('create-task-modal').classList.remove('hidden')">
+                @can('create', [\App\Models\Task::class, $project])
+                    <button class="text-on-surface-variant hover:text-primary transition-colors" onclick="document.getElementById('create-task-modal').classList.remove('hidden'); document.getElementById('create-task-modal-content').classList.remove('hidden')">
                         <span class="material-symbols-outlined text-[18px]">add</span>
                     </button>
                 @endcan
@@ -149,10 +157,10 @@
     @can('manageMembers', $project)
         @include('projects.modals.manage-members', ['project' => $project])
     @endcan
-    @can('create', App\Models\Task::class)
+    @can('create', [\App\Models\Task::class, $project])
         @include('tasks.modals.create-task', ['project' => $project])
     @endcan
-    @can('update', App\Models\Task::class)
+    {{-- @can('update', App\Models\Task::class) --}}
         @include('tasks.modals.edit-task', ['project' => $project])
-    @endcan
+    {{-- @endcan --}}
 @endsection

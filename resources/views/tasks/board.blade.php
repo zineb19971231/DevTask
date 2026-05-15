@@ -8,8 +8,14 @@
 
 @section('content')
 <div class="h-full flex flex-col">
-    <div class="mb-6">
-        <p class="text-on-surface-variant">Visualize your workflow and progress.</p>
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <p class="text-on-surface-variant">Visualize your workflow and progress.</p>
+        </div>
+        <button onclick="document.getElementById('global-create-task-modal').classList.remove('hidden'); document.getElementById('global-create-task-modal-content').classList.remove('hidden')" class="bg-primary text-on-primary font-body-strong px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary-fixed transition-colors">
+            <span class="material-symbols-outlined text-[18px]">add</span>
+            Add Task
+        </button>
     </div>
 
     <div class="flex-1 flex gap-6 overflow-x-auto pb-4">

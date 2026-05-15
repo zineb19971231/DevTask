@@ -7,6 +7,9 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
+
 class ProjectController extends Controller
 {
     public function index()
@@ -31,18 +34,13 @@ class ProjectController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Project::class);
         return view('projects.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        $validated = $request->validate([
-            'titre' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'deadline' => 'nullable|date',
-        ]);
-
-        $project = Project::create($validated);
+        $project = Project::create($request->validated());
         
         // Assign current user as lead
         $project->members()->attach(Auth::id(), ['role' => 'lead']);
@@ -52,6 +50,7 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
+        $this->authorize('view', $project);
         $user = Auth::user();
         $project->load(['members', 'tasks.user']);
         $tasks = $project->tasks;
@@ -65,18 +64,13 @@ class ProjectController extends Controller
 
     public function edit(Project $project)
     {
+        $this->authorize('update', $project);
         return view('projects.edit', compact('project'));
     }
 
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        $validated = $request->validate([
-            'titre' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'deadline' => 'nullable|date',
-        ]);
-
-        $project->update($validated);
+        $project->update($request->validated());
 
         return redirect()->route('projects.show', $project)->with('success', 'Project updated.');
     }
@@ -100,33 +94,44 @@ class ProjectController extends Controller
     public function restore($projectId)
     {
         $project = Project::withTrashed()->findOrFail($projectId);
+        $this->authorize('restore', $project);
         $project->restore();
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with('success', 'Project restored.');
     }
 
     public function forceDelete($projectId)
     {
         $project = Project::withTrashed()->findOrFail($projectId);
+        $this->authorize('forceDelete', $project);
         $project->forceDelete();
-        return redirect()->route('projects.archives');
+        return redirect()->route('projects.archives')->with('success', 'Project permanently deleted.');
     }
 
     public function invite(Request $request, Project $project)
     {
-        $request->validate(['email' => 'required|email|exists:users,email']);
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
         
         $user = \App\Models\User::where('email', $request->email)->first();
         
-        if (!$project->members()->where('user_id', $user->id)->exists()) {
-            $project->members()->attach($user->id, ['role' => 'developer']);
+        if ($project->members()->where('user_id', $user->id)->exists()) {
+            return back()->with('error', 'This user is already a member of this project.');
         }
 
-        return response()->json(['success' => true]);
+        $project->members()->attach($user->id, ['role' => 'developer']);
+
+        return back()->with('success', $user->name . ' has been added to the project.');
     }
 
     public function removeMember(Project $project, \App\Models\User $user)
     {
+        // Don't allow removing the lead/self
+        if ($user->id === Auth::id()) {
+            return back()->with('error', 'You cannot remove yourself from the project.');
+        }
+
         $project->members()->detach($user->id);
-        return response()->json(['success' => true]);
+        return back()->with('success', 'Member removed successfully.');
     }
 }
